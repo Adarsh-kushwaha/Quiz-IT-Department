@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Avatar,Button, CssBaseline, Box, TextField, FormControlLabel, Checkbox,Grid, Link, Typography, Container} from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AuthBar from "./AuthBar";
+import axiosInstance from '../Axios';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -47,7 +49,41 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SignIn() {
+
   const classes = useStyles();
+  const history = useHistory();
+	const initialFormData = Object.freeze({
+		username: '',
+		password: '',
+	});
+
+	const [formData, updateFormData] = useState(initialFormData);
+
+	const handleChange = (e) => {
+		updateFormData({
+			...formData,
+			[e.target.name]: e.target.value.trim(),
+		});
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(formData);
+
+    axiosInstance.post(`login/`, {
+      username: formData.username,
+      password: formData.password,
+    })
+    .then((res) => {
+      localStorage.setItem('access_token', res.data.access);
+      localStorage.setItem('refresh_token', res.data.refresh);
+      axiosInstance.defaults.headers['Authorization'] =
+        'JWT ' + localStorage.getItem('access_token');
+      history.push('/');
+      console.log(res);
+      console.log(res.data);
+    });
+};
  
   return (
     
@@ -66,25 +102,28 @@ export default function SignIn() {
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+						margin="normal"
+						required
+						fullWidth
+						id="username"
+						label="UserName"
+						name="username"
+						autoComplete="username"
+            type="text"
+						autoFocus
+						onChange={handleChange}
           />
           <TextField
             variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+						margin="normal"
+						required
+						fullWidth
+						name="password"
+						label="Password"
+						type="password"
+						id="password"
+						autoComplete="current-password"
+						onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -96,6 +135,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
@@ -121,3 +161,9 @@ export default function SignIn() {
     
   );
 }
+
+
+
+
+
+
