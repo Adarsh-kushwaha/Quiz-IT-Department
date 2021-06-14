@@ -74,12 +74,12 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(3),
       display: 'flex',
-      overflow: 'auto',
+      // overflow: 'auto',
       flexDirection: 'column',
       overflow:"hidden",
     },
     recentQuiz:{
-      boxShadow:'(1)',
+      
     },
 
     fixedHeight: {
