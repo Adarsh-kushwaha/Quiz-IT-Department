@@ -9,22 +9,24 @@ import { mainListItems, secondaryListItems } from './ListItems';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 import useStyles from './Styles';
-import {ThemeProvider, createMuiTheme} from "@material-ui/core/styles"
+import {ThemeProvider, createMuiTheme} from "@material-ui/core/styles";
+import TestTimeline from "./TestTimeline";
+import RunningQuiz from './RunningQuiz';
 
 //Footer Of Website
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Quiz
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="">
+//         Quiz
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -94,28 +96,34 @@ const Dashboard = () => {
         <ThemeProvider theme = {theme}>
         <Paper>
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
+          <Grid container spacing={2}>
+            {/* Quiz1 */}
+            <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
+                <TestTimeline />
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+            {/* Quiz 2 */}
+            <Grid item xs={12} md={4} lg={4}>
               <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
+              <TestTimeline />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
+            {/* Quiz 3 */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Paper className={fixedHeightPaper}>
+              <TestTimeline />
+              </Paper>
+            </Grid>
+            {/* Recent Quiz */}
+            <Grid item xs={12} md = {6} lg={6} className={classes.recentQuiz} >
               <Paper className={classes.paper}>
-                {/* <Orders /> */}
+                <RunningQuiz />
               </Paper>
             </Grid>
           </Grid>
           <Box pt={4}>
-            <Copyright />
+            {/* <Copyright /> */}
           </Box>
         </Container>
         </Paper>

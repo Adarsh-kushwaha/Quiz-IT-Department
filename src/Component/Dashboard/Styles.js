@@ -1,3 +1,4 @@
+//styling of dashboard page
 import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -71,17 +72,22 @@ const useStyles = makeStyles((theme) => ({
       height:"100vh",
     },
     paper: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(3),
       display: 'flex',
       overflow: 'auto',
       flexDirection: 'column',
+      overflow:"hidden",
     },
+    recentQuiz:{
+      boxShadow:'(1)',
+    },
+
     fixedHeight: {
-      height: 240,
+      height: 180,
     },
-    sideList:{
-        marginBottom: "50",
-    }
+
+    
+    
 
   }));
 
