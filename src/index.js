@@ -13,6 +13,6 @@ ReactDOM.render( <
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Demo from './Component/screen1';
+import Demo from './Component/Dashboard/closedialog';
 
 ReactDOM.render( < Demo / > , document.querySelector('#root'));
