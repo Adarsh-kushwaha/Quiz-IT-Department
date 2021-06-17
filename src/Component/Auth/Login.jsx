@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Avatar,Button, CssBaseline, Box, TextField, FormControlLabel, Checkbox,Grid, Link, Typography, Container} from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AuthBar from "./AuthBar";
-import axiosInstance from '../Axios';
-import { useHistory } from 'react-router-dom';
+import {publicFetch} from "../../Util/Fetch"
+// import axiosInstance from '../Axios';
+// import { useHistory } from 'react-router-dom';
 
 
 
@@ -49,12 +50,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SignIn() {
-  
-  
-  const classes = useStyles();
-  const history = useHistory();
-	const initialFormData = Object.freeze({
+export default function Login() {
+    const classes = useStyles();
+    const initialFormData = Object.freeze({
 		username: '',
 		password: '',
 	});
@@ -68,34 +66,27 @@ export default function SignIn() {
 		});
 	};
 
-	const handleSubmit = (e) => {
     
-		e.preventDefault();
-		console.log(formData);
-    
+ const handleSubmit =(e)=>{
+     e.preventDefault();
 
-    axiosInstance.post(`login/`, {
-      username: formData.username,
-      password: formData.password,
-    })
-    .then((res) => {
-      
-      localStorage.setItem('access_token', res.data.access);
-      localStorage.setItem('refresh_token', res.data.refresh);
-      axiosInstance.defaults.headers['Authorization'] =
-        'JWT ' + localStorage.getItem('access_token');
-     
-      history.push('/');
-      console.log(res);
-      console.log(res.data);
-      
-      
-    });
+     const submitCredentials = async credentials =>{
+        
+        try{
+            const {data} = await publicFetch.post('login/', credentials, time)
+            console.log(data)
+        }catch(err){
+           console.log(err)
+        }
+    }
 
-   
+    submitCredentials();
+
+ }
 
     
-};
+  
+  
  
   return (
     
@@ -109,7 +100,7 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in 
+          LogIn 
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -149,7 +140,7 @@ export default function SignIn() {
             className={classes.submit}
             onClick={handleSubmit}
           >
-            Sign In
+            LogIn
           </Button>
           <Grid container>
             <Grid item xs>

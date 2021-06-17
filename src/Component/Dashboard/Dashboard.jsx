@@ -12,6 +12,7 @@ import useStyles from './Styles';
 import {ThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import TestTimeline from "./TestTimeline";
 import RunningQuiz from './RunningQuiz';
+import { getUsername } from '../../Util/Common';
 
 //Footer Of Website
 
@@ -29,6 +30,7 @@ import RunningQuiz from './RunningQuiz';
 // }
 
 const Dashboard = () => {
+  const user = getUsername();
   const classes = useStyles();
 
   const theme = createMuiTheme({
@@ -67,7 +69,7 @@ const Dashboard = () => {
           <IconButton color="inherit" size="medium">
           <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap',}}>
         <AccountCircleRoundedIcon />
-        <span><p style={{fontSize:'16px', paddingInline:'8px'}}> Enrollment Number </p></span>
+        <span><p style={{fontSize:'16px', paddingInline:'8px'}}> {user} </p></span>
         </div> 
           </IconButton>
 
