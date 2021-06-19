@@ -5,9 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { mainListItems, secondaryListItems } from './ListItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
+
 import useStyles from './Styles';
 import {ThemeProvider, createMuiTheme} from "@material-ui/core/styles";
 import TestTimeline from "./TestTimeline";
@@ -39,7 +37,7 @@ const Dashboard = () => {
       }
   })
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
