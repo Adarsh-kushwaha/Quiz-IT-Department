@@ -27,7 +27,9 @@ import CollectData from '../Quiz/CollectData';
 // }
 
 const Dashboard = () => {
-  const Link ="http://localhost:3000/test/" 
+
+  
+  const Link = "http://localhost:3000/test/"
   const API_URL = "http://52.172.164.179:8090/test/?archived=false"
   const [dataState] = CollectData(API_URL)
   console.log(dataState)
@@ -117,7 +119,7 @@ const Dashboard = () => {
                         No Of Question : {q.questions.length}
                       </Typography>
                       <div>
-                        <Button className={classes.attemptBtn} variant="contained" color="primary" href={Link+q.id}>
+                        <Button className={classes.attemptBtn} variant="contained" color="primary" href={Link + q.id}>
                           Attempt Now
                         </Button></div>
                     </Paper>
@@ -127,30 +129,30 @@ const Dashboard = () => {
 
 
                 ))}
-                    {/* <Grid item xs={12} md={4} lg={4}>
+                {/* <Grid item xs={12} md={4} lg={4}>
                   <Paper className={fixedHeightPaper}>
                     
                   </Paper>
                 </Grid> */}
-                    {/* Quiz 2 */}
-                    {/* <Grid item xs={12} md={4} lg={4}>
+                {/* Quiz 2 */}
+                {/* <Grid item xs={12} md={4} lg={4}>
                   <Paper className={fixedHeightPaper}>
                    
                   </Paper>
                 </Grid> */}
-                    {/* Quiz 3 */}
-                    {/* <Grid item xs={12} md={4} lg={4}>
+                {/* Quiz 3 */}
+                {/* <Grid item xs={12} md={4} lg={4}>
                   <Paper className={fixedHeightPaper}>
                 
                   </Paper>
                 </Grid> */}
-                    {/* Recent Quiz */}
-                    {/* <Grid item xs={12} md={6} lg={6} className={classes.recentQuiz} >
+                {/* Recent Quiz */}
+                {/* <Grid item xs={12} md={6} lg={6} className={classes.recentQuiz} >
                   <Paper className={classes.paper}>
                   
                   </Paper>
                 </Grid> */}
-                  </Grid>
+              </Grid>
               {/* <Box pt={4}>
                
               </Box> */}
@@ -159,6 +161,6 @@ const Dashboard = () => {
         </ThemeProvider>
       </main>
     </div >
-      );
+  );
 }
-      export default Dashboard;
+export default Dashboard;

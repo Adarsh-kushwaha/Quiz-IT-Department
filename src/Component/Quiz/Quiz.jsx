@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import CollectData from './CollectData';
 import QuizHeader from './QuizHeader';
@@ -6,6 +6,7 @@ import useStyles from './Styles';
 import { createMuiTheme, CssBaseline, Grid, Paper, Container, Typography, Button, Radio, FormControlLabel, RadioGroup, ThemeProvider, Box } from "@material-ui/core"
 import axiosInstance from '../Axios';
 import EndScreen from './QuizComponent/EndScreen';
+import StartScreen from './QuizComponent/StartScreen';
 
 
 const Quiz = () => {
@@ -18,6 +19,16 @@ const Quiz = () => {
     const [optionChoosen, setOptionChoosen] = useState("");
     const [score, setScore] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [timedPopup, setTimedPopup] = useState(false);
+
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setTimedPopup(true)
+        }, 1000);
+    }, [])
+
 
 
     const handleChange = (event) => {
@@ -36,7 +47,7 @@ const Quiz = () => {
     const nextQuestion = () => {
         if (dataState.data.questions[currentQuestion].answer === optionChoosen) {
             setScore((score + dataState.data.questions[currentQuestion].marks))
-           
+
 
         }
 
@@ -61,12 +72,12 @@ const Quiz = () => {
         // 
         axiosInstance.post(`result/`, {
             quiz: id,
-            marks: score,
+            marks: score.toString,
 
 
         }).then((resolve) => {
             console.log(resolve)
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
         })
 
@@ -79,17 +90,42 @@ const Quiz = () => {
         }
     })
 
+    const startTimer = () => {
+        setTimedPopup(false)
+    }
 
 
 
     return (
 
         <React.Fragment>
+
+            <StartScreen open={timedPopup}>
+                Instruction
+                <div>
+                    <ul>
+                        <li><Typography className={classes.pos} color="textSecondary">
+                            adjective
+                        </Typography></li>
+                        <li><Typography className={classes.pos} color="textSecondary">
+                            adjective
+                        </Typography></li>
+                        <li><Typography className={classes.pos} color="textSecondary">
+                            adjective
+                        </Typography></li>
+                    </ul>
+
+                    <Button variant="contained" color="primary" onClick={startTimer} >
+                        Start Quiz
+                    </Button>
+                </div>
+            </StartScreen>
+
             <EndScreen open={isOpen}>
                 Your Score : {score}
-                <div>
+                {/* <div>
                     <Button variant="contained" color="primary" href="http://localhost:3000">Go To Dashboard</Button>
-                </div>
+                </div> */}
             </EndScreen>
 
             <CssBaseline />
