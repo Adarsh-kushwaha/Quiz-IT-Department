@@ -31,6 +31,7 @@ const Dashboard = () => {
   
   const Link = "http://localhost:3000/test/"
   const API_URL = "http://52.172.164.179:8090/test/?archived=false"
+  // const API_URL = "http://localhost:8000/test/?archived=false"
   const [dataState] = CollectData(API_URL)
   console.log(dataState)
   const user = getUsername();
