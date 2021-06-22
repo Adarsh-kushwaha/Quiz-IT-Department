@@ -59,13 +59,9 @@ const Quiz = () => {
 
         // 
         axiosInstance.post(`result`, {
-            body:{
-                quiz : {id},
-                marks:{score}
-            },
-            header:{
-                "bearer token": {getToken}
-            }
+            quiz:"1",
+            marks:"5"
+            
             
         }).then((resolve) => {
             console.log(resolve)
