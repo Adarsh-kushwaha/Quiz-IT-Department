@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import CollectData from './CollectData';
 import QuizHeader from './QuizHeader';
 import useStyles from './Styles';
-import { CssBaseline, Grid, Paper, Container, Typography, Button, Radio, FormControlLabel, RadioGroup, ThemeProvider, Box } from "@material-ui/core"
-import axios from 'axios';
+import { createMuiTheme, CssBaseline, Grid, Paper, Container, Typography, Button, Radio, FormControlLabel, RadioGroup, ThemeProvider, Box } from "@material-ui/core"
 import axiosInstance from '../Axios';
+import EndScreen from './QuizComponent/EndScreen';
 
 
 const Quiz = () => {
@@ -17,9 +17,7 @@ const Quiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [optionChoosen, setOptionChoosen] = useState("");
     const [score, setScore] = useState(0);
-    const api = "http://52.172.164.179:8090"
-    const getToken = localStorage.getItem("access_token");
-    console.log(getToken)
+    const [isOpen, setIsOpen] = useState(false);
 
 
     const handleChange = (event) => {
@@ -38,6 +36,7 @@ const Quiz = () => {
     const nextQuestion = () => {
         if (dataState.data.questions[currentQuestion].answer === optionChoosen) {
             setScore((score + dataState.data.questions[currentQuestion].marks))
+           
 
         }
 
@@ -56,32 +55,29 @@ const Quiz = () => {
         }
 
         console.log(score)
+        setIsOpen(true)
+
 
         // 
-        axiosInstance.post(`result`, {
-            quiz:"1",
-            marks:"5"
-            
-            
+        axiosInstance.post(`result/`, {
+            quiz: id,
+            marks: score,
+
+
         }).then((resolve) => {
             console.log(resolve)
+        }).catch((err)=>{
+            console.log(err)
         })
 
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    const theme = createMuiTheme({
+        palette: {
+            type: "light",
+        }
+    })
 
 
 
@@ -89,11 +85,16 @@ const Quiz = () => {
     return (
 
         <React.Fragment>
-
+            <EndScreen open={isOpen}>
+                Your Score : {score}
+                <div>
+                    <Button variant="contained" color="primary" href="http://localhost:3000">Go To Dashboard</Button>
+                </div>
+            </EndScreen>
 
             <CssBaseline />
             <QuizHeader title={dataState.data.title} />
-            <ThemeProvider>
+            <ThemeProvider theme={theme}>
 
                 <div className={classes.root}>
                     <Container className={classes.quizContainer} >
@@ -141,36 +142,26 @@ const Quiz = () => {
                                                 </Box>
                                             </Grid>
                                         </Grid>
-
-
-
                                     </div>
 
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <Paper className={classes.paper}>
-                                    {/* for(let i=0 ; i < dataState.data.question.length ;  i++){
-                                        <Grid container spacing={2}>
 
-                                            <Grid item xs={12} sm={4}>
-                                                <Paper className={classes.paper}>1</Paper>
-                                            </Grid>
-                                        </Grid>
-                                    } */}
                                     <Grid container spacing={2}>
 
                                         <Grid item xs={12} sm={4}>
                                             <Paper className={classes.paper}>1</Paper>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            <Paper className={classes.paper}>1</Paper>
+                                            <Paper className={classes.paper}>2</Paper>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            <Paper className={classes.paper}>1</Paper>
+                                            <Paper className={classes.paper}>3</Paper>
                                         </Grid>
                                         <Grid item xs={12} sm={4}>
-                                            <Paper className={classes.paper}>1</Paper>
+                                            <Paper className={classes.paper}>4</Paper>
                                         </Grid>
                                     </Grid>
                                 </Paper>
@@ -178,6 +169,7 @@ const Quiz = () => {
 
                         </Grid>
                     </Container>
+
                 </div>
 
 
