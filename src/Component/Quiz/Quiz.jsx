@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useParams } from 'react-router'
 import CollectData from './CollectData';
 import QuizHeader from './QuizHeader';
 import useStyles from './Styles';
-import Dashboard from '../Dashboard/Dashboard';
 import { CssBaseline, Grid, Paper, Container, Typography, Button, Radio, FormControlLabel, RadioGroup, ThemeProvider, Box } from "@material-ui/core"
+import axios from 'axios';
+import axiosInstance from '../Axios';
+
 
 const Quiz = () => {
     const { id } = useParams();
     const API_URL = "http://52.172.164.179:8090/test/" + id;
     const [dataState] = CollectData(API_URL)
-    console.log(dataState);
+    // console.log(dataState);
     const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [optionChoosen, setOptionChoosen] = useState("");
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(0);
+    const api = "http://52.172.164.179:8090"
+    const getToken = localStorage.getItem("access_token");
+    console.log(getToken)
+
 
     const handleChange = (event) => {
         setOptionChoosen(event.target.value);
@@ -23,7 +29,7 @@ const Quiz = () => {
     const prevQuestion = () => {
 
         if (dataState.data.questions[currentQuestion].answer === optionChoosen) {
-            // setScore((score+1) * (dataState.data.questions[currentQuestion].marks))
+
         }
         setCurrentQuestion(currentQuestion - 1)
 
@@ -31,7 +37,8 @@ const Quiz = () => {
 
     const nextQuestion = () => {
         if (dataState.data.questions[currentQuestion].answer === optionChoosen) {
-            setScore((score + 1) * (dataState.data.questions[currentQuestion].marks))
+            setScore((score + dataState.data.questions[currentQuestion].marks))
+
         }
 
         setCurrentQuestion(currentQuestion + 1)
@@ -48,7 +55,21 @@ const Quiz = () => {
 
         }
 
-        return <Dashboard />
+        console.log(score)
+
+        // 
+        axiosInstance.post(`result`, {
+            body:{
+                quiz : {id},
+                marks:{score}
+            },
+            header:{
+                "bearer token": {getToken}
+            }
+            
+        }).then((resolve) => {
+            console.log(resolve)
+        })
 
 
     }
@@ -56,8 +77,24 @@ const Quiz = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
+
         <React.Fragment>
+
+
             <CssBaseline />
             <QuizHeader title={dataState.data.title} />
             <ThemeProvider>
@@ -78,10 +115,10 @@ const Quiz = () => {
                                     <div>
 
                                         <RadioGroup aria-label="" name="" value={optionChoosen} onChange={handleChange}>
-                                            <FormControlLabel value="option_a" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].option_a : null} />
-                                            <FormControlLabel value="option_b" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].option_b : null} />
-                                            <FormControlLabel value="option_c" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].option_c : null} />
-                                            <FormControlLabel value="option_d" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].option_d : null} />
+                                            <FormControlLabel value="option_a" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].options.option_a : null} />
+                                            <FormControlLabel value="option_b" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].options.option_b : null} />
+                                            <FormControlLabel value="option_c" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].options.option_c : null} />
+                                            <FormControlLabel value="option_d" control={<Radio />} label={dataState.data.questions ? dataState.data.questions[currentQuestion].options.option_d : null} />
 
                                         </RadioGroup>
                                         <Grid container spacing={3}>
@@ -147,7 +184,9 @@ const Quiz = () => {
                     </Container>
                 </div>
 
+
             </ThemeProvider>
+
 
         </React.Fragment>
     )

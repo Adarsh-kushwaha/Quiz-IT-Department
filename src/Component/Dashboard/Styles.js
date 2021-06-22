@@ -78,12 +78,12 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       overflow:"hidden",
     },
-    recentQuiz:{
-      
+    attemptBtn:{
+      marginTop:"8px",
     },
 
     fixedHeight: {
-      height: 180,
+      height: "auto",
     },
 
     

@@ -5,7 +5,7 @@ import Error from './Component/Error';
 import Quiz from './Component/Quiz/Quiz';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignIn from './Component/Auth/SignIn';
-import StartScreen from './Component/Quiz/QuizComponent/StartScreen';
+import MainQuizScreen from './MainQuizScreen';
 
 export const App = () => {
   return (
@@ -16,7 +16,7 @@ export const App = () => {
           <Route exact path="/" component = {Dashboard}/>
           <Route exact path="/login" component = {SignIn}/>
           <Route exact path="/test/:id" component = {Quiz}/>
-          <Route exact path="/screen" component = {StartScreen}/>
+          <Route exact path="/quiz" component = {MainQuizScreen}/>
           <Route component = {Error}/>
         </Switch>
       </Router>
