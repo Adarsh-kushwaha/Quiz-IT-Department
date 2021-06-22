@@ -11,7 +11,7 @@ import StartScreen from './QuizComponent/StartScreen';
 
 const Quiz = () => {
     const { id } = useParams();
-    const API_URL = "http://52.172.164.179:8090/test/" + id ;
+    const API_URL = "http://52.172.164.179:8090/test/" + id +"/";
     // const API_URL = "http://localhost:8000/test/" + id+"/";
     const [dataState] = CollectData(API_URL)
     // console.log(dataState);
